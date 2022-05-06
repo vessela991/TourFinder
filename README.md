@@ -7,3 +7,4 @@ Tasks:
 3. Create entities (User, Agency, etc)
 4. Create repositories, services and controllers
 5. Create Postman collection
+6. Add unit tests for the implemented functionality
