@@ -14,27 +14,28 @@ public class TourService {
     @Autowired
     private TourRepository tourRepository;
 
-
     public Iterable<Tour> getAll() {
         return tourRepository.findAll();
     }
 
     public Tour getById(String id) {
-        return tourRepository.findById(id).orElse(null);
+        return tourRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Tour not found"));
     }
 
     public Validation<List<String>, Tour> create(Tour tour) {
         var validation = TourValidator.validate(tour);
-        if (validation.isValid()) {
-            tourRepository.save(tour);
+        if (!validation.isValid()) {
+            return validation;
         }
-        return validation;
+        return Validation.valid(tourRepository.save(tour));
     }
 
     public Validation<List<String>, Tour> update(String id, Tour tour) {
-        //TODO: Implement update
         var validation = TourValidator.validate(tour);
-        return validation;
+        if (!validation.isValid()) {
+            return validation;
+        }
+        return Validation.valid(tourRepository.save(tour));
     }
 
     public void delete(String id) {
