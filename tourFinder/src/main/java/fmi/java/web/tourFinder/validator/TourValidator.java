@@ -5,13 +5,13 @@ import java.util.List;
 
 public class TourValidator {
     public static Validation<List<String>, Tour> validate(Tour tour) {
+
         var nameValidation = isValidName(tour);
         var descriptionValidation = isValidDescription(tour);
         var destinationValidation = isValidDestination(tour);
         var priceValidation = isValidPrice(tour);
         var startDateValidation = isValidStartDate(tour);
         var endDateValidation = isValidEndDate(tour);
-
 
         List<String> errors = new java.util.ArrayList<>();
         if (nameValidation.getErrors() != null) {

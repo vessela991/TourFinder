@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/users")
@@ -15,37 +16,41 @@ public class UserController {
     private UserService userService;
 
     @GetMapping()
-    public ResponseEntity getAll() {
+    public ResponseEntity<Iterable<User>> getAll() {
         return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity get(@PathVariable("id") String id) {
-        var test = userService.getById(id);
-        if (test != null) {
-            return new ResponseEntity<>(test, HttpStatus.OK);
+    public ResponseEntity<User> get(@PathVariable("id") String id) {
+        try {
+            var user = userService.getById(id);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Could not find entity with id %s", id));
         }
-        return new ResponseEntity<>(String.format("Could not find entity with id %s", id), HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestBody User user) {
-        var test = userService.create(user);
-        if (test.getValue() != null) {
-            return new ResponseEntity<>(test, HttpStatus.CREATED);
+    public ResponseEntity<User> create(@RequestBody User user) {
+        var createdUser = userService.create(user);
+        if (createdUser.getValue() != null) {
+            return new ResponseEntity<>(createdUser.getValue(), HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(test, HttpStatus.BAD_REQUEST);
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.join("; ", createdUser.getErrors()));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@RequestBody User user, @RequestParam("id") String id) {
-
-        return new ResponseEntity<>("fdscs", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<User> update(@RequestBody User user, @RequestParam("id") String id) {
+        return new ResponseEntity<>(userService.update(user, id).getValue(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable("id") String id) {
-        userService.delete(id);
-        return new ResponseEntity("", HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> delete(@PathVariable("id") String id) {
+        try {
+            userService.delete(id);
+            return new ResponseEntity<>("", HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Could not delete entity with id %s", id));
+        }
     }
 }

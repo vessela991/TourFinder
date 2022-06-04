@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/tours")
@@ -19,31 +20,35 @@ public class TourController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable("id") String id) {
-        var tour = tourService.getById(id);
-        if (tour != null) {
-            return new ResponseEntity(tour, HttpStatus.OK);
+    public ResponseEntity<Tour> getById(@PathVariable("id") String id) {
+        try {
+            return new ResponseEntity<>(tourService.getById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Could not find entity with id %s", id));
         }
-        return new ResponseEntity<>(String.format("Could not find entity with id %s", id), HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping()
-    public ResponseEntity create(@RequestBody Tour tour) {
-        var test = tourService.create(tour);
-        if (test.getValue() != null) {
-            return new ResponseEntity<>(test, HttpStatus.CREATED);
+    public ResponseEntity<Tour> create(@RequestBody Tour tour) {
+        var createdTour = tourService.create(tour);
+        if (createdTour.getValue() != null) {
+            return new ResponseEntity<>(createdTour.getValue(), HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(test, HttpStatus.BAD_REQUEST);
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.join("\n", createdTour.getErrors()));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable("id") String id, @RequestBody Tour tour) {
-        return new ResponseEntity(tourService.update(id, tour), HttpStatus.OK);
+    public ResponseEntity<Tour> update(@PathVariable("id") String id, @RequestBody Tour tour) {
+        return new ResponseEntity<>(tourService.update(id, tour).getValue(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable("id") String id) {
-        tourService.delete(id);
-        return new ResponseEntity("", HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> delete(@PathVariable("id") String id) {
+        try {
+            tourService.delete(id);
+            return new ResponseEntity<>("", HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Could not find entity with id %s", id));
+        }
     }
 }
