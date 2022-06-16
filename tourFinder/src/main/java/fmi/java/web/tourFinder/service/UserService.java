@@ -1,10 +1,14 @@
 package fmi.java.web.tourFinder.service;
 
+import fmi.java.web.tourFinder.exception.UnauthorizedException;
+import fmi.java.web.tourFinder.model.Role;
 import fmi.java.web.tourFinder.model.User;
 import fmi.java.web.tourFinder.repository.UserRepository;
+import fmi.java.web.tourFinder.response.UserCreateResponse;
 import fmi.java.web.tourFinder.validator.UserValidator;
 import fmi.java.web.tourFinder.validator.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +18,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public Validation<List<String>, User> create(User user) {
         var validation = UserValidator.validate(user);
@@ -35,6 +42,8 @@ public class UserService {
             }
             return Validation.invalid(errors);
         }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return Validation.valid(userRepository.save(user));
     }
 
@@ -91,11 +100,15 @@ public class UserService {
         }
     }
 
-    public void delete(String id) {
-        if (userRepository.findById(id).isPresent()) {
-            userRepository.deleteById(id);
+    public void delete(String id, User loggedUser) {
+        if (loggedUser.getId().equals(id) || loggedUser.getRole().equals(Role.ADMIN)) {
+            if (userRepository.findById(id).isPresent()) {
+                userRepository.deleteById(id);
+            } else {
+                throw new IllegalArgumentException("User with id " + id + " does not exist");
+            }
         } else {
-            throw new IllegalArgumentException("User with id " + id + " does not exist");
+            throw new RuntimeException("You are not authorized to perform this action");
         }
     }
 }

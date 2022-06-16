@@ -1,10 +1,12 @@
 package fmi.java.web.tourFinder.validator;
 
 import fmi.java.web.tourFinder.model.Tour;
+import fmi.java.web.tourFinder.request.TourCreateRequest;
+
 import java.util.List;
 
 public class TourValidator {
-    public static Validation<List<String>, Tour> validate(Tour tour) {
+    public static Validation<List<String>, TourCreateRequest> validate(TourCreateRequest tour) {
 
         var nameValidation = isValidName(tour);
         var descriptionValidation = isValidDescription(tour);
@@ -36,13 +38,13 @@ public class TourValidator {
         return errors.isEmpty() ? Validation.valid(tour) : Validation.invalid(errors);
     }
 
-    public static Validation<String, Tour> isValidName(Tour tour) {
+    public static Validation<String, TourCreateRequest> isValidName(TourCreateRequest tour) {
         return tour.getName() != null && tour.getName().matches("^[a-zA-Z0-9]{5,50}$")
                 ? Validation.valid(tour)
                 : Validation.invalid("Invalid tour name. Tour name must be between 5 and 50 characters and can contain only letters and numbers");
     }
 
-    public static Validation<String, Tour> isValidDescription(Tour tour) {
+    public static Validation<String, TourCreateRequest> isValidDescription(TourCreateRequest tour) {
         if (tour.getDescription() != null) {
             return tour.getDescription().length() < 2000
                     ? Validation.valid(tour)
@@ -51,25 +53,25 @@ public class TourValidator {
         return Validation.valid(tour);
     }
 
-    public static Validation<String, Tour> isValidDestination(Tour tour) {
+    public static Validation<String, TourCreateRequest> isValidDestination(TourCreateRequest tour) {
         return tour.getDestination() != null
                 ? Validation.valid(tour)
                 : Validation.invalid("Invalid destination. Destination must be specified");
     }
 
-    public static Validation<String, Tour> isValidPrice(Tour tour) {
+    public static Validation<String, TourCreateRequest> isValidPrice(TourCreateRequest tour) {
         return tour.getPrice() > 0
                 ? Validation.valid(tour)
                 : Validation.invalid("Invalid price. Price must be greater than 0");
     }
 
-    public static Validation<String, Tour> isValidStartDate(Tour tour) {
+    public static Validation<String, TourCreateRequest> isValidStartDate(TourCreateRequest tour) {
         return tour.getStartDate() != null && tour.getStartDate().before(tour.getEndDate())
                 ? Validation.valid(tour)
                 : Validation.invalid("Invalid start date. Start date must be before end date");
     }
 
-    public static Validation<String, Tour> isValidEndDate(Tour tour) {
+    public static Validation<String, TourCreateRequest> isValidEndDate(TourCreateRequest tour) {
         return tour.getEndDate() != null && tour.getEndDate().after(tour.getStartDate())
                 ? Validation.valid(tour)
                 : Validation.invalid("Invalid end date. End date must be after start date");

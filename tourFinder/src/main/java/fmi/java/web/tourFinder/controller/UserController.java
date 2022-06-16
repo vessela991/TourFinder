@@ -1,7 +1,9 @@
 package fmi.java.web.tourFinder.controller;
 
 import fmi.java.web.tourFinder.model.User;
+import fmi.java.web.tourFinder.response.UserCreateResponse;
 import fmi.java.web.tourFinder.service.UserService;
+import fmi.java.web.tourFinder.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -31,10 +33,10 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user) {
+    public ResponseEntity<UserCreateResponse> create(@RequestBody User user) {
         var createdUser = userService.create(user);
         if (createdUser.getValue() != null) {
-            return new ResponseEntity<>(createdUser.getValue(), HttpStatus.CREATED);
+            return new ResponseEntity<>(UserCreateResponse.fromUser(createdUser.getValue()), HttpStatus.CREATED);
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.join("; ", createdUser.getErrors()));
     }
@@ -45,9 +47,9 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") String id) {
+    public ResponseEntity<String> delete(@PathVariable("id") String id, @RequestAttribute(Constants.LOGGED_USER) User loggedUser) {
         try {
-            userService.delete(id);
+            userService.delete(id, loggedUser);
             return new ResponseEntity<>("", HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Could not delete entity with id %s", id));

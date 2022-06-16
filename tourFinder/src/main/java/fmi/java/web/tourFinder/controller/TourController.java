@@ -1,6 +1,7 @@
 package fmi.java.web.tourFinder.controller;
 
 import fmi.java.web.tourFinder.model.Tour;
+import fmi.java.web.tourFinder.request.TourCreateRequest;
 import fmi.java.web.tourFinder.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/tours")
+@RequestMapping("/api/tours")
 public class TourController {
     @Autowired
     private TourService tourService;
@@ -29,7 +30,7 @@ public class TourController {
     }
 
     @PostMapping()
-    public ResponseEntity<Tour> create(@RequestBody Tour tour) {
+    public ResponseEntity<Tour> create(@ModelAttribute TourCreateRequest tour) {
         var createdTour = tourService.create(tour);
         if (createdTour.getValue() != null) {
             return new ResponseEntity<>(createdTour.getValue(), HttpStatus.CREATED);
@@ -38,7 +39,7 @@ public class TourController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tour> update(@PathVariable("id") String id, @RequestBody Tour tour) {
+    public ResponseEntity<Tour> update(@PathVariable("id") String id, @RequestBody TourCreateRequest tour) {
         return new ResponseEntity<>(tourService.update(id, tour).getValue(), HttpStatus.OK);
     }
 

@@ -2,6 +2,7 @@ package fmi.java.web.tourFinder.validator;
 
 import fmi.java.web.tourFinder.model.Role;
 import fmi.java.web.tourFinder.model.User;
+import fmi.java.web.tourFinder.response.UserCreateResponse;
 
 import java.util.List;
 
