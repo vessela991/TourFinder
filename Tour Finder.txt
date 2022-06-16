@@ -1,0 +1,43 @@
+﻿Tour Finder
+The idea of this project is to develop a website in which people can find excursions/ tours that suit them.
+
+
+Basic Business Requirements
+
+
+Basic user can view all available tours, book a tour, rate and comment on it. User has information about:
+* Username
+* Password
+* Email
+* Phone number
+
+
+Agency user can create a tour in the system. Every tour has information about:
+* Name
+* Destination
+* Description
+* Pictures
+* Price
+
+
+Advanced Business Requirements
+
+
+* Login page 
+* Different roles for anonymous user, user, agency and admin
+Anonymous user(not logged in):
+* Can view all the available excursions
+* Can log in/register
+User:
+* Has all the functionality of the anonymous user
+* Can book a tour
+* Can leave a comment and rate a booked tour
+* Screen for personal information 
+* Can add/modify/remove personal information
+Agency:
+* Can create a tour
+* Can update their tours
+* Can delete their tours
+Admin:
+* Has all the functionality of the other roles, can manage all tours
+* Logout with a redirect to the login page
