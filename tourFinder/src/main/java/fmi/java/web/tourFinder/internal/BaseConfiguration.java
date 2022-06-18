@@ -1,4 +1,4 @@
-package fmi.java.web.tourFinder;
+package fmi.java.web.tourFinder.internal;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

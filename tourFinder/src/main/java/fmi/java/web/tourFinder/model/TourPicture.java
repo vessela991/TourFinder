@@ -4,24 +4,22 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "tours_pictures")
 public class TourPicture {
-    private int id;
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
+    @Lob
     private String picture;
-    @ManyToOne
-    @JoinColumn(name = "tour_id")
-    private Tour tour;
-
-    public TourPicture(String picture, Tour tour) {
-        this.picture = picture;
-        this.tour = tour;
-    }
+    private String tourId;
 }

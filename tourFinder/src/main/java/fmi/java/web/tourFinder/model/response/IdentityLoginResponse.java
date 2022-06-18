@@ -1,4 +1,4 @@
-package fmi.java.web.tourFinder.response;
+package fmi.java.web.tourFinder.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

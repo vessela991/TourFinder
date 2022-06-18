@@ -1,8 +1,7 @@
-package fmi.java.web.tourFinder.util;
+package fmi.java.web.tourFinder.internal.util;
 
 public final class Constants {
+    private Constants() {}
 
-    private Constants() {
-    }
     public final static String LOGGED_USER = "loggedUser";
 }

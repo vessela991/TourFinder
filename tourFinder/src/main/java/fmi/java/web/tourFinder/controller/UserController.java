@@ -1,17 +1,18 @@
 package fmi.java.web.tourFinder.controller;
 
+import fmi.java.web.tourFinder.businessLogic.service.JwtService;
+import fmi.java.web.tourFinder.businessLogic.service.UserService;
+import fmi.java.web.tourFinder.internal.util.Constants;
+import fmi.java.web.tourFinder.internal.util.Routes;
 import fmi.java.web.tourFinder.model.User;
-import fmi.java.web.tourFinder.response.UserCreateResponse;
-import fmi.java.web.tourFinder.service.UserService;
-import fmi.java.web.tourFinder.util.Constants;
+import fmi.java.web.tourFinder.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(Routes.USERS)
 public class UserController {
 
     @Autowired
@@ -23,36 +24,22 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> get(@PathVariable("id") String id) {
-        try {
-            var user = userService.getById(id);
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Could not find entity with id %s", id));
-        }
+    public ResponseEntity<User> getById(@PathVariable("id") String id, @RequestAttribute(Constants.LOGGED_USER) User loggedUser) {
+        return userService.getById(id, loggedUser).toResponseEntity();
     }
 
     @PostMapping
-    public ResponseEntity<UserCreateResponse> create(@RequestBody User user) {
-        var createdUser = userService.create(user);
-        if (createdUser.getValue() != null) {
-            return new ResponseEntity<>(UserCreateResponse.fromUser(createdUser.getValue()), HttpStatus.CREATED);
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.join("; ", createdUser.getErrors()));
+    public ResponseEntity<User> create(@RequestBody User user) {
+        return userService.create(user).toResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@RequestBody User user, @RequestParam("id") String id) {
-        return new ResponseEntity<>(userService.update(user, id).getValue(), HttpStatus.OK);
+    public ResponseEntity<User> update(@PathVariable("id") String id, @RequestBody User user, @RequestAttribute(Constants.LOGGED_USER) User loggedUser) {
+        return userService.update(id, user, loggedUser).toResponseEntity();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") String id, @RequestAttribute(Constants.LOGGED_USER) User loggedUser) {
-        try {
-            userService.delete(id, loggedUser);
-            return new ResponseEntity<>("", HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Could not delete entity with id %s", id));
-        }
+        return userService.delete(id, loggedUser).toResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

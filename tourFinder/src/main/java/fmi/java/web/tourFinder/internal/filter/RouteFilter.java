@@ -1,11 +1,10 @@
-package fmi.java.web.tourFinder.filter;
+package fmi.java.web.tourFinder.internal.filter;
 
-import fmi.java.web.tourFinder.exception.ForbiddenException;
-import fmi.java.web.tourFinder.exception.UnauthorizedException;
-import fmi.java.web.tourFinder.model.Role;
+import fmi.java.web.tourFinder.businessLogic.exception.ForbiddenException;
+import fmi.java.web.tourFinder.businessLogic.exception.UnauthorizedException;
+import fmi.java.web.tourFinder.internal.util.Constants;
+import fmi.java.web.tourFinder.internal.util.Routes;
 import fmi.java.web.tourFinder.model.User;
-import fmi.java.web.tourFinder.util.CommonUtils;
-import fmi.java.web.tourFinder.util.Routes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.util.Pair;
@@ -29,34 +28,28 @@ public class RouteFilter extends OncePerRequestFilter {
     @Autowired
     private AntPathMatcher antPathMatcher;
 
-    private static final Set<Pair<HttpMethod, String>> anonymousRoutes = new HashSet<>(){{
-        add(Pair.of(HttpMethod.POST, Routes.LOGIN));
-        add(Pair.of(HttpMethod.POST, Routes.USERS));
+    private static final Set<Pair<HttpMethod, String>> basicTourRoutes = new HashSet<>(){{
         add(Pair.of(HttpMethod.GET, Routes.TOURS));
         add(Pair.of(HttpMethod.GET, Routes.TOURS_ID));
+        add(Pair.of(HttpMethod.GET, Routes.TOURS_ID_PICTURES));
     }};
 
-    private static final Set<Pair<HttpMethod, String>> basicUserRoutes = new HashSet<>(){{
-        add(Pair.of(HttpMethod.GET, Routes.USERS));
+    private static final Set<Pair<HttpMethod, String>> anonymousRoutes = new HashSet<>(){{
+        addAll(basicTourRoutes);
+        add(Pair.of(HttpMethod.POST, Routes.LOGIN));
+        add(Pair.of(HttpMethod.POST, Routes.USERS));
+    }};
+
+    private static final Set<Pair<HttpMethod, String>> userRoutes = new HashSet<>(){{
+        addAll(basicTourRoutes);
         add(Pair.of(HttpMethod.GET, Routes.USERS_ID));
         add(Pair.of(HttpMethod.DELETE, Routes.USERS_ID));
         add(Pair.of(HttpMethod.PUT, Routes.USERS_ID));
-        add(Pair.of(HttpMethod.GET, Routes.TOURS));
-        add(Pair.of(HttpMethod.GET, Routes.TOURS_ID));
+        add(Pair.of(HttpMethod.POST, Routes.BOOKING_ID));
     }};
 
     private static final Set<Pair<HttpMethod, String>> agencyRoutes = new HashSet<>(){{
-        addAll(basicUserRoutes);
-        add(Pair.of(HttpMethod.POST, Routes.TOURS));
-        add(Pair.of(HttpMethod.PUT, Routes.TOURS_ID));
-        add(Pair.of(HttpMethod.DELETE, Routes.TOURS_ID));
-    }};
-
-    private static final Set<Pair<HttpMethod, String>> adminRoutes = new HashSet<>(){{
-        addAll(agencyRoutes);
-        add(Pair.of(HttpMethod.POST, Routes.USERS));
-        add(Pair.of(HttpMethod.DELETE, Routes.USERS_ID));
-
+        addAll(basicTourRoutes);
         add(Pair.of(HttpMethod.POST, Routes.TOURS));
         add(Pair.of(HttpMethod.PUT, Routes.TOURS_ID));
         add(Pair.of(HttpMethod.DELETE, Routes.TOURS_ID));
@@ -66,26 +59,26 @@ public class RouteFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
                                     HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws IOException, ServletException {
-        User user = CommonUtils.getLoggedUser(httpServletRequest);
+        User user = (User) httpServletRequest.getAttribute(Constants.LOGGED_USER);
+
+        if (user == null && !isRequestValid(httpServletRequest, anonymousRoutes)) {
+            httpServletResponse.sendError(UnauthorizedException.instance().getStatusCode().value(), UnauthorizedException.instance().getMessage());
+            return;
+        }
 
         if (user == null) {
-            if (!isRequestValid(httpServletRequest, anonymousRoutes)) {
-                throw UnauthorizedException.create();
-            }
-        } else if (Role.USER.equals(user.getRole())) {
-            if (!isRequestValid(httpServletRequest, basicUserRoutes)) {
-                throw ForbiddenException.create();
-            }
-        } else if (Role.AGENCY.equals(user.getRole())) {
-            if (!isRequestValid(httpServletRequest, agencyRoutes)) {
-                throw ForbiddenException.create();
-            }
-        } else if (Role.ADMIN.equals(user.getRole())) {
-            if (!isRequestValid(httpServletRequest, adminRoutes)) {
-                throw ForbiddenException.create();
-            }
-        } else {
-            throw ForbiddenException.create();
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+            return;
+        }
+
+        if (user.isUser() && !isRequestValid(httpServletRequest, userRoutes)) {
+            httpServletResponse.sendError(ForbiddenException.instance().getStatusCode().value(), ForbiddenException.instance().getMessage());
+            return;
+        }
+
+        if (user.isAgency() && !isRequestValid(httpServletRequest, agencyRoutes)) {
+            httpServletResponse.sendError(ForbiddenException.instance().getStatusCode().value(), ForbiddenException.instance().getMessage());
+            return;
         }
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
@@ -98,6 +91,7 @@ public class RouteFilter extends OncePerRequestFilter {
                 return true;
             }
         }
+
         return false;
     }
 

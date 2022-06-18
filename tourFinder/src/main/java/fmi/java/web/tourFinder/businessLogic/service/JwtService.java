@@ -1,9 +1,9 @@
-package fmi.java.web.tourFinder.service;
+package fmi.java.web.tourFinder.businessLogic.service;
 
+import fmi.java.web.tourFinder.businessLogic.Result;
+import fmi.java.web.tourFinder.businessLogic.exception.UnauthorizedException;
 import fmi.java.web.tourFinder.model.User;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -33,30 +33,13 @@ public class JwtService {
         return claims;
     }
 
-    public Claims getClaims(String jwt) {
+    public Result<String> getUserId(String jwt) {
         try {
-            return extractClaims(jwt);
+            var claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(jwt).getBody();
+            return Result.success(claims.get(CLAIM_USER_ID).toString());
         }
-        catch (Exception e) {
-            return null;
+        catch (ExpiredJwtException | IllegalArgumentException | SignatureException | MalformedJwtException | UnsupportedJwtException exception) {
+            return Result.failure(UnauthorizedException.instance());
         }
-    }
-
-    private Claims extractClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
-    }
-
-    public boolean validateClaims(Claims claims) {
-        return isClaimContained(claims, CLAIM_USER_ID) && !isTokenExpired(claims);
-    }
-
-    private Boolean isClaimContained(Claims claims, String claim) { return claims.containsKey(claim); }
-
-    private Boolean isTokenExpired(Claims claims) {
-        return claims.getExpiration().before(new Date());
-    }
-
-    public String getUserId(Claims claims) {
-        return claims.get(CLAIM_USER_ID).toString();
     }
 }

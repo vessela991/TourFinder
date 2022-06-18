@@ -1,4 +1,4 @@
-package fmi.java.web.tourFinder.request;
+package fmi.java.web.tourFinder.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
