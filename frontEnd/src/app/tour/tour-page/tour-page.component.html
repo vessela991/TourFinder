@@ -1,0 +1,43 @@
+<div class="tour-page">
+  <app-navigation></app-navigation>
+  <div class="tour-page-content">
+    <div class="tour-basic-info">
+      <div class="tour-header">
+        <h1 class="tour-name">Tour Name</h1>
+        <button mat-button class="mat-class-buttons" id="edit-button"><mat-icon > border_color</mat-icon></button>
+      </div>
+        <mat-slider
+        thumbLabel="true"
+        tickInterval="1000"
+        color="warn"
+        step="1"
+        min="0"
+        max="10"
+        aria-label="units"
+        ></mat-slider>
+      <button mat-button id="rate-btn" class="mat-class-buttons">Rate</button>
+      <div class="tour-price">
+        <mat-label class="mat-input-element-bold" id="tour-price-header">Price</mat-label>
+        <mat-label class="mat-input-element" id="tour-price-value">1000 lv</mat-label>
+      </div>
+      <div class="tour-photo">
+        <img id="tour-photo" src="../../../assets/image1.jpg">
+      </div>
+      <div class="tour-destination">
+        <mat-label class="mat-input-element-bold" id="tour-destination-header">Destination</mat-label>
+        <mat-label class="mat-input-element" id="tour-destination-value">Dubai</mat-label>
+      </div>
+      <div class="tour-description">
+        <mat-label class="mat-input-element-bold" id="tour-description-header">Description</mat-label>
+        <mat-label class="mat-input-element" id="tour-description-value">Some description</mat-label>
+      </div>
+      <div class="tour-comments">
+        <h2 id="comments-header">Comments</h2>
+        <app-add-comment></app-add-comment>
+        <hr>
+        <app-tour-comments></app-tour-comments>
+        <app-tour-comments></app-tour-comments>
+      </div>
+    </div>
+  </div>
+</div>

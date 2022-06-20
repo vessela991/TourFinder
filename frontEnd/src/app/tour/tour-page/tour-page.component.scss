@@ -1,0 +1,80 @@
+@import url('http://fonts.cdnfonts.com/css/italiana');
+
+.tour-page-content{
+  margin: 2rem 2rem 1rem 2rem;
+}
+
+.tour-header{
+  display: flex;
+  flex-direction: row;
+}
+
+#edit-button{
+  margin-top: -1rem;
+}
+
+mat-slider{
+  width: 300px;
+}
+
+.tour-name{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+#rate-btn{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.tour-price{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+#tour-photo{
+  max-width: 20rem;
+  max-height: 30rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tour-destination{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 1rem;
+}
+
+.tour-description{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 1rem;
+}
+
+#comments-header{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+hr{
+  width: 90%;
+}
+
+app-tour-comments{
+  margin-top: 2rem;
+}

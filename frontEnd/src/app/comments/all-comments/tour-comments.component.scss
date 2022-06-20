@@ -1,0 +1,36 @@
+@import url('http://fonts.cdnfonts.com/css/italiana');
+
+.comment{
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.left-part-comment{
+  display: flex;
+  flex-direction: column;
+}
+
+#comment-username{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+}
+
+#comment-date-and-hour{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+}
+
+#comment-content{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+}
+
+.right-part-comment{
+  border: 1px solid black;
+  width: 35rem;
+  height: 4rem;
+  border-radius: 8px;
+}
+
+

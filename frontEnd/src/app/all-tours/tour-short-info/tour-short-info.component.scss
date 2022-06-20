@@ -1,0 +1,56 @@
+@import url('http://fonts.cdnfonts.com/css/italiana');
+
+.tour-short-info{
+  display: grid;
+  grid-template-columns: 1fr 5fr 2fr;
+  grid-template-areas:
+  "photo name price"
+  "photo destination ..."
+  "... ... see-more";
+  margin: 1rem 2rem 1rem 2rem;
+  padding: 1rem;
+}
+
+.tour-short-info:hover{
+  background-color: #a2eed6;
+}
+
+#tour-photo{
+  grid-area: photo;
+  width: 10rem;
+  height: 10rem;
+}
+
+.center-part-tour{
+  display: flex;
+  flex-direction: column;
+}
+
+#tour-name{
+  grid-area: name;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+#tour-destination{
+  grid-area: destination;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+}
+
+#tour-price{
+  grid-area: price;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+}
+
+#see-more-button{
+  grid-area: see-more;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: -2rem;
+}
+
+

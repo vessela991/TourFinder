@@ -1,0 +1,77 @@
+@import url('http://fonts.cdnfonts.com/css/italiana');
+
+h2{
+  grid-area: welcome-header;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+img{
+  grid-area: background-image;
+}
+
+h3{
+  grid-area: register-header;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+h1{
+  grid-area: login-header;
+  font-size: 50px;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+}
+
+form{
+  grid-area: form;
+  font-size: 20px;
+}
+
+mat-label{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+}
+
+span{
+  background-color: #a2eed6;
+  padding-top: 2rem;
+  padding-left: 2rem;
+}
+
+.login-page-class{
+  background-color: #54ddaf;
+  position: relative;
+  display: grid;
+  height: 100%;
+  grid-template-columns:25% 20%;
+  grid-template-rows: 0fr 3fr 0fr;
+  grid-template-areas:
+"welcome-header login-header "
+"background-image form "
+"register-header form ";
+  //padding-left: 35rem;
+  padding-top: 2rem;
+}
+
+.right-part-login{
+  padding-left: 2rem;
+}
+
+.login-form-container .mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+.mat-class-buttons{
+  background-color: #70ddbb;
+  font-size: 30px;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+}
+
+.mat-form-field{
+  width: 70%;
+  font-size: larger;
+}

@@ -1,0 +1,38 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width" appearance="fill" id="search-field">
+    <mat-label>Search</mat-label>
+    <input type="text"
+           placeholder="Pick one"
+           aria-label="Search"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <button mat-button class="mat-class-buttons" id="contact-button">Contacts</button>
+  <button mat-button class="mat-class-buttons" id="login-button">Log In</button>
+  <button mat-button class="mat-class-buttons" id="registration-button">Registration</button>
+  <h1 id="welcome-header">Welcome!</h1>
+
+  <mat-form-field appearance="fill" id="destinations-button">
+    <mat-label>Destinations</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let destination of destinations" [value]="destination">{{destination}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" id="rankings-button">
+    <mat-label>Rankings</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let ranking of rankings" [value]="ranking">{{ranking}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</form>
+
+

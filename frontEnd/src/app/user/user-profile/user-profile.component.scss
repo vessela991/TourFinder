@@ -1,0 +1,93 @@
+@import url('http://fonts.cdnfonts.com/css/italiana');
+
+.user-info{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+  "app-navigation"
+  "my-info"
+  "photo"
+  "username"
+  "email"
+  "phone-number";
+}
+
+app-navigation{
+  grid-area: app-navigation;
+}
+
+.basic-user-info{
+  font-family: 'Italiana', sans-serif;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.personal-info{
+  margin: 1rem 2rem 1rem 2rem;
+}
+
+.header{
+  grid-area: my-info;
+  display: flex;
+  flex-direction: row;
+}
+
+h1{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+#edit-button{
+  margin-top: -1rem;
+}
+
+#person-image{
+  grid-area: photo;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+#edit-button{
+  grid-area: edit-button;
+  width: 50px;
+}
+
+.username{
+  grid-area: username;
+  display: flex;
+  flex-direction: row;
+  gap: 10rem;
+}
+
+.email{
+  grid-area: email;
+  display: flex;
+  flex-direction: row;
+  gap: 10rem;
+}
+
+.phone-number{
+  grid-area: phone-number;
+  display: flex;
+  flex-direction: row;
+  gap: 10rem;
+}
+
+.basic-user-fields{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mat-input-element-bold{
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.mat-input-element{
+  font-weight: bold;
+  font-size: 18px;
+}

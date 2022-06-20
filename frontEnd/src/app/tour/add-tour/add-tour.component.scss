@@ -1,0 +1,34 @@
+@import url('http://fonts.cdnfonts.com/css/italiana');
+
+.add-tour-page{
+  display: grid;
+  grid-template-areas: "app-navigation app-navigation"
+  "image add-tour-form";
+  padding: 1rem 2rem 1rem 2rem;
+  background-color: #24d698;
+}
+
+app-navigation{
+  grid-area: app-navigation;
+}
+
+.left-part-add-tour-page{
+  grid-area: image;
+  background-color: #6ed6ad;
+}
+
+.right-part-add-tour-page{
+  grid-area: add-tour-form;
+  background-color: #6ed6ad;
+}
+
+h1{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+mat-label{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+}
