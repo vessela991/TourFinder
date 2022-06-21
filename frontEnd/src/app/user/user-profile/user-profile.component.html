@@ -10,19 +10,29 @@
     <div class="basic-user-fields">
         <div class="username">
         <mat-label class="mat-input-element-bold">Username</mat-label>
-          <mat-label class="mat-input-element">Gosho</mat-label>
+          <mat-label class="mat-input-element">{{user.username}}</mat-label>
         </div>
         <br>
         <div class="email">
         <mat-label class="mat-input-element-bold">Email</mat-label>
-            <mat-label class="mat-input-element">gosho@abv.bg</mat-label>
+            <mat-label class="mat-input-element">{{user.email}}</mat-label>
         </div>
             <br>
         <div class="phone-number">
         <mat-label class="mat-input-element-bold">Phone number</mat-label>
-           <mat-label class="mat-input-element">0895123456</mat-label>
+           <mat-label class="mat-input-element">{{user.phoneNumber}}</mat-label>
         </div>
             <br>
+      <div class="role">
+        <mat-label class="mat-input-element-bold">Role</mat-label>
+           <mat-label class="mat-input-element">{{user.role}}</mat-label>
+        </div>
+            <br>
+<!--      <div class="booked-tours">-->
+<!--        <mat-label class="mat-input-element-bold">Booked Tours</mat-label>-->
+<!--           <mat-label class="mat-input-element">{{user.bookedTours}}</mat-label>-->
+<!--        </div>-->
+<!--            <br>-->
     <!--Liked tours, commented tours-->
     </div>
   </span>
