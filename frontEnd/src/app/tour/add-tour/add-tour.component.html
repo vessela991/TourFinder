@@ -7,21 +7,15 @@
       <h1>Add Tour</h1>
       <form [formGroup]="addTourForm" (submit)="addTour()">
         <mat-form-field appearance="fill">
-          <mat-label>Enter your username</mat-label>
-          <input matInput placeholder="Ivan Petrov" [formControl]="username" required>
-          <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-        <br>
-        <mat-form-field appearance="fill">
           <mat-label>Enter the name of the tour</mat-label>
           <input matInput placeholder="Dubai Tour" [formControl]="tourName" required>
-          <mat-error *ngIf="tourName.invalid">{{getErrorMessage()}}</mat-error>
+          <mat-error *ngIf="tourName.invalid">{{getTourNameErrorMessage()}}</mat-error>
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill">
           <mat-label>Enter the price of the tour</mat-label>
           <input matInput placeholder="1000 euro" [formControl]="tourPrice" required>
-          <mat-error *ngIf="tourPrice.invalid">{{getErrorMessage()}}</mat-error>
+          <mat-error *ngIf="tourPrice.invalid">{{getTourPriceErrorMessage()}}</mat-error>
         </mat-form-field>
         <br>
         <button mat-raised-button class="mat-class-buttons">
@@ -33,15 +27,37 @@
         <mat-form-field appearance="fill">
           <mat-label>Enter the destination of the tour</mat-label>
           <input matInput placeholder="Dubai" [formControl]="tourDestination" required>
-            <mat-error *ngIf="tourDestination.invalid">{{getErrorMessage()}}</mat-error>
+            <mat-error *ngIf="tourDestination.invalid">{{getTourDestinationErrorMessage()}}</mat-error>
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill">
           <mat-label>Enter the description of the tour</mat-label>
           <input matInput placeholder="Perfect place for relax" [formControl]="tourDescription" required>
-          <mat-error *ngIf="tourDescription.invalid">{{getErrorMessage()}}</mat-error>
+          <mat-error *ngIf="tourDescription.invalid">{{getTourDescriptionErrorMessage()}}</mat-error>
         </mat-form-field>
         <br>
+        <div class="from-date-tour">
+          <mat-label>Enter the start date of the tour</mat-label>
+          <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-error *ngIf="tourStartDate.invalid">{{getTourStartDateErrorMessage()}}</mat-error>
+        </div>
+        <div class="to-date-tour">
+          <mat-label>Enter the end date of the tour</mat-label>
+          <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-error *ngIf="tourStartDate.invalid">{{getTourEndDateErrorMessage()}}</mat-error>
+        </div>
         <button mat-raised-button class="mat-class-buttons">Add Tour</button>
       </form>
     </span>
