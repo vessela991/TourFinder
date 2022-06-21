@@ -1,0 +1,50 @@
+<div class="add-tour-page">
+  <app-navigation></app-navigation>
+  <span class="left-part-add-tour-page">
+    <img src="../../../assets/image1.jpg">
+  </span>
+  <span class="right-part-add-tour-page">
+      <h1>Add Tour</h1>
+      <form [formGroup]="addTourForm" (submit)="addTour()">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your username</mat-label>
+          <input matInput placeholder="Ivan Petrov" [formControl]="username" required>
+          <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter the name of the tour</mat-label>
+          <input matInput placeholder="Dubai Tour" [formControl]="tourName" required>
+          <mat-error *ngIf="tourName.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter the price of the tour</mat-label>
+          <input matInput placeholder="1000 euro" [formControl]="tourPrice" required>
+          <mat-error *ngIf="tourPrice.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button class="mat-class-buttons">
+          <input class="ng-hide" id="input-file-id" multiple type="file" style="display: none"/>
+          <label for="input-file-id" class="md-button md-raised md-primary">Choose Tour Photo</label>
+        </button>
+        <br>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter the destination of the tour</mat-label>
+          <input matInput placeholder="Dubai" [formControl]="tourDestination" required>
+            <mat-error *ngIf="tourDestination.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter the description of the tour</mat-label>
+          <input matInput placeholder="Perfect place for relax" [formControl]="tourDescription" required>
+          <mat-error *ngIf="tourDescription.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button class="mat-class-buttons">Add Tour</button>
+      </form>
+    </span>
+</div>
+
+

@@ -1,0 +1,13 @@
+<div class="comment">
+  <form [formGroup]="addCommentGroup" (submit)="addComment()">
+  <div class="left-part-comment">
+    <img src="../../../assets/image1.jpg" id="comment-user-photo" [formControl]="photo">
+    <h1 id="comment-username" [formControl]="username">Username</h1>
+  </div>
+  <div class="right-part-comment">
+    <input matInput id="comment-input" placeholder="Write your comment..." [formControl]="comment" required>
+    <button mat-button id="add-comment-button" class="mat-class-buttons">Add Comment</button>
+  </div>
+  </form>
+</div>
+

@@ -1,0 +1,50 @@
+<div class="registration-page-class">
+  <span class="left-part-registration">
+    <h2>Welcome To Our Tour Finder Web App!</h2>
+    <img src="../../../assets/image1.jpg">
+    <h3>You have an account? Log In!</h3>
+  </span>
+  <span class="right-part-registration">
+      <h1>Registration</h1>
+      <form [formGroup]="registrationForm" (submit)="register()">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your username</mat-label>
+          <input matInput placeholder="Ivan Petrov" [formControl]="username" required>
+          <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="password.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Confirm your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" [formControl]="confirmedPassword" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="confirmedPassword.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+          <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="pat@example.com" [formControl]="email" required>
+          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your phone number</mat-label>
+          <input matInput placeholder="0898954321" [formControl]="phoneNumber" required>
+          <mat-error *ngIf="phoneNumber.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+          <br>
+        <button mat-raised-button class="mat-class-buttons">Registration</button>
+      </form>
+    </span>
+</div>
+

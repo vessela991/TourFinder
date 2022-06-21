@@ -1,0 +1,78 @@
+@import url('http://fonts.cdnfonts.com/css/italiana');
+
+.contacts-info{
+  margin: 2rem 2rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#tour-agency-name{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 50px;
+}
+
+#tour-agency-phone-number{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.phone-number{
+  margin-top: 1rem;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#tour-agency-email{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.tour-agency-email{
+  margin-top: 1rem;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#tour-agency-address{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.tour-agency-address{
+  margin-top: 1rem;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#tour-agency-work-time{
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.tour-agency-work-time{
+  margin-top: 1rem;
+  font-family: 'Italiana', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
