@@ -10,7 +10,9 @@
           <mat-form-field appearance="fill">
             <mat-label>Enter your email</mat-label>
             <input matInput placeholder="pat@example.com" [formControl]="email" required>
-            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            <mat-error *ngIf = "email.invalid">{{getErrorEmailMessage()}}>
+              Please enter a valid email address!
+            </mat-error>
           </mat-form-field>
           <br>
           <mat-form-field appearance="fill">
@@ -19,7 +21,9 @@
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-          <mat-error *ngIf="password.invalid">{{getErrorMessage()}}</mat-error>
+            <mat-error *ngIf="password.invalid">{{getErrorPasswordMessage()}}>
+              Please enter a valid password!
+            </mat-error>
           </mat-form-field>
           <br>
           <button mat-raised-button class="mat-class-buttons" (click)="navigate()">Log In</button>
