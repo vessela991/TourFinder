@@ -65,6 +65,16 @@ mat-slider{
   margin-bottom: 1rem;
 }
 
+.tour-start-date{
+  display: flex;
+  flex-direction: row;
+}
+
+.tour-end-date{
+  display: flex;
+  flex-direction: row;
+}
+
 #comments-header{
   font-family: 'Italiana', sans-serif;
   font-weight: bold;
